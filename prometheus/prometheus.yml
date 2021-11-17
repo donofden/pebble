@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'extract-monitor'
+
+# include the rules for alerting
+rule_files:
+  - rules.yml
+
+# targets for scraping metrics from
+scrape_configs:
+
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ 'prometheus:9090' ]
+
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs:
+      - targets: ['localhost:9091']
